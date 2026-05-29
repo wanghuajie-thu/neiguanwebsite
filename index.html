@@ -25,99 +25,88 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
         }
 
         body {
             font-family: 'Noto Sans SC', sans-serif;
-            background: #2a2420;
+            background: var(--paper);
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding: 20px;
+            overflow-x: hidden;
         }
 
         /* 纸张肌理背景 */
-        .paper-bg {
-            background-color: var(--paper);
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
             background-image:
                 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
         }
 
-        /* 手机上移除模拟外壳 */
-        @media screen and (max-width: 500px) {
-            body {
-                padding: 0;
-                background: var(--paper);
-            }
-        }
-
-        .phone {
-            width: 390px;
-            height: 844px;
-            border-radius: 44px;
-            overflow: hidden;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
             position: relative;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 0 12px #1a1510, 0 0 0 13px #2a2218;
+            z-index: 1;
         }
 
-        @media screen and (max-width: 500px) {
-            .phone {
-                width: 100%;
-                height: auto;
-                border-radius: 0;
-                box-shadow: none;
-                min-height: 100vh;
-            }
-        }
-
-        @media screen and (min-width: 501px) {
-            body {
-                padding: 20px;
-            }
-        }
-
-        .screen {
-            width: 100%;
-            height: 100%;
-            overflow-y: auto;
-            overflow-x: hidden;
-            position: relative;
-            scroll-behavior: smooth;
-            background: var(--paper);
-        }
-
-        .screen::-webkit-scrollbar {
-            display: none;
-        }
-
-        /* 状态栏 */
-        .status-bar {
-            height: 44px;
+        /* 导航栏 */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: rgba(237, 230, 216, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--line);
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 0 28px;
-            font-size: 13px;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            width: 100%;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-logo {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 18px;
             font-weight: 600;
             color: var(--ink-brown);
-            position: sticky;
-            top: 0;
-            background: var(--paper);
-            z-index: 100;
+            letter-spacing: 4px;
         }
 
-        .status-bar-left, .status-bar-right {
+        .nav-links {
             display: flex;
-            align-items: center;
-            gap: 4px;
+            gap: 40px;
+        }
+
+        .nav-links a {
+            color: var(--ink-mid);
+            text-decoration: none;
+            font-size: 14px;
+            letter-spacing: 2px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
         }
 
         /* 首页Banner */
         .home-banner {
             position: relative;
-            height: 280px;
+            height: 500px;
+            margin-top: 70px;
             overflow: hidden;
         }
 
@@ -141,44 +130,46 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 0 32px;
+            padding: 0 80px;
             z-index: 2;
         }
 
         .banner-logo {
             font-family: 'Noto Serif SC', serif;
-            font-size: 13px;
+            font-size: 16px;
             font-weight: 300;
-            color: rgba(61,46,30,0.55);
-            letter-spacing: 6px;
-            margin-bottom: 14px;
+            color: rgba(61,46,30,0.6);
+            letter-spacing: 8px;
+            margin-bottom: 20px;
         }
 
         .banner-headline {
             font-family: 'Noto Serif SC', serif;
-            font-size: 28px;
+            font-size: 56px;
             font-weight: 700;
             color: #3d2e1e;
-            line-height: 1.4;
-            margin-bottom: 12px;
+            line-height: 1.3;
+            margin-bottom: 20px;
+            letter-spacing: 4px;
         }
 
         .banner-sub {
-            font-size: 12px;
+            font-size: 18px;
             font-weight: 300;
-            color: rgba(61,46,30,0.55);
-            line-height: 1.8;
-            letter-spacing: 1px;
+            color: rgba(61,46,30,0.7);
+            line-height: 2;
+            letter-spacing: 2px;
+            max-width: 600px;
         }
 
         /* 大字装饰 */
         .big-char {
             position: absolute;
-            right: 20px;
+            right: 80px;
             top: 50%;
             transform: translateY(-50%);
             font-family: 'Noto Serif SC', serif;
-            font-size: 120px;
+            font-size: 280px;
             font-weight: 900;
             color: rgba(242,235,224,0.08);
             line-height: 1;
@@ -187,101 +178,145 @@
 
         /* 板块标题 */
         .section-head {
-            padding: 28px 24px 14px;
+            padding: 60px 40px 30px;
             display: flex;
             align-items: flex-end;
             justify-content: space-between;
             position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .section-head::after {
             content: '';
             position: absolute;
             bottom: 0;
-            left: 24px;
-            right: 24px;
+            left: 40px;
+            right: 40px;
             height: 1px;
             background: var(--line);
         }
 
         .section-ch {
             font-family: 'Noto Serif SC', serif;
-            font-size: 22px;
+            font-size: 32px;
             font-weight: 700;
             color: var(--ink-brown);
-            letter-spacing: 2px;
+            letter-spacing: 4px;
             line-height: 1;
-            margin-bottom: 4px;
+            margin-bottom: 8px;
         }
 
         .section-en {
             font-family: 'IM Fell English', serif;
             font-style: italic;
-            font-size: 11px;
-            color: rgba(90,66,50,0.45);
-            letter-spacing: 2px;
+            font-size: 16px;
+            color: rgba(90,66,50,0.5);
+            letter-spacing: 4px;
         }
 
         /* 五心归一 */
         .core-grid {
-            padding: 0 20px;
+            padding: 0 40px;
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .core-card {
             background: var(--paper-dark);
             border: 1px solid var(--line);
-            border-radius: 4px;
-            padding: 18px 16px;
+            border-radius: 8px;
+            padding: 40px 30px;
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s;
         }
 
-        .core-card:active {
+        .core-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(61,46,30,0.1);
             background: var(--paper-darker);
         }
 
         .core-icon {
             font-family: 'Noto Serif SC', serif;
-            font-size: 32px;
+            font-size: 56px;
             font-weight: 700;
             color: var(--accent);
             line-height: 1;
-            margin-bottom: 8px;
+            margin-bottom: 16px;
         }
 
         .core-title {
             font-family: 'Noto Serif SC', serif;
-            font-size: 14px;
+            font-size: 20px;
             font-weight: 600;
             color: var(--ink-brown);
-            margin-bottom: 4px;
-            letter-spacing: 1px;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
         }
 
         .core-sub {
-            font-size: 10px;
-            color: rgba(90,66,50,0.5);
+            font-size: 14px;
+            color: rgba(90,66,50,0.6);
             text-align: center;
-            letter-spacing: 0.5px;
-            line-height: 1.5;
+            letter-spacing: 1px;
+            line-height: 1.8;
+        }
+
+        /* 标签云 */
+        .tag-section {
+            padding: 0 40px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tag-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .tag {
+            padding: 12px 28px;
+            font-size: 15px;
+            color: var(--ink-mid);
+            background: var(--paper-dark);
+            border: 1px solid var(--line);
+            border-radius: 30px;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+        }
+
+        .tag:hover {
+            background: var(--accent);
+            color: var(--paper);
+            border-color: var(--accent);
+            transform: translateY(-2px);
         }
 
         /* 修行六途 */
         .journey-list {
-            padding: 0 20px;
+            padding: 0 40px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .journey-item {
             border-bottom: 1px solid var(--line);
-            padding: 20px 0;
+            padding: 40px 0;
             position: relative;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 40px;
+            align-items: start;
         }
 
         .journey-item:last-child {
@@ -290,285 +325,340 @@
 
         .journey-number {
             font-family: 'Noto Serif SC', serif;
-            font-size: 48px;
+            font-size: 72px;
             font-weight: 900;
             color: var(--accent);
-            opacity: 0.15;
-            position: absolute;
-            right: 0;
-            top: 8px;
+            opacity: 0.2;
             line-height: 1;
+        }
+
+        .journey-content {
+            padding-top: 10px;
         }
 
         .journey-title {
             font-family: 'Noto Serif SC', serif;
-            font-size: 18px;
+            font-size: 24px;
             font-weight: 700;
             color: var(--ink-brown);
-            letter-spacing: 2px;
-            margin-bottom: 6px;
-            position: relative;
+            letter-spacing: 4px;
+            margin-bottom: 16px;
         }
 
         .journey-title::before {
             content: '「';
-            font-size: 16px;
+            font-size: 20px;
             color: var(--accent);
+            margin-right: 8px;
         }
 
         .journey-title::after {
             content: '」';
-            font-size: 16px;
+            font-size: 20px;
             color: var(--accent);
+            margin-left: 8px;
         }
 
         .journey-desc {
-            font-size: 13px;
-            color: rgba(90,66,50,0.65);
-            line-height: 1.8;
-            letter-spacing: 0.5px;
+            font-size: 16px;
+            color: rgba(90,66,50,0.7);
+            line-height: 2;
+            letter-spacing: 1px;
         }
 
         /* 引用区域 */
         .quote-section {
-            padding: 32px 24px;
+            padding: 60px 40px;
             background: var(--paper-dark);
             position: relative;
-            margin: 20px 0;
+            margin: 40px 0;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 8px;
         }
 
         .quote-deco {
             position: absolute;
-            top: 16px;
-            left: 20px;
+            top: 30px;
+            left: 40px;
             font-family: 'Noto Serif SC', serif;
-            font-size: 40px;
+            font-size: 80px;
             color: var(--accent);
-            opacity: 0.2;
+            opacity: 0.15;
+            line-height: 1;
         }
 
         .quote-text {
             font-family: 'Noto Serif SC', serif;
-            font-size: 16px;
+            font-size: 24px;
             font-weight: 500;
             color: var(--ink-brown);
-            line-height: 2;
-            letter-spacing: 2px;
+            line-height: 2.2;
+            letter-spacing: 4px;
             text-align: center;
-        }
-
-        /* 标签云 */
-        .tag-section {
-            padding: 0 20px 24px;
-        }
-
-        .tag-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .tag {
-            padding: 8px 16px;
-            font-size: 12px;
-            color: var(--ink-mid);
-            background: var(--paper-dark);
-            border: 1px solid var(--line);
-            border-radius: 20px;
-            letter-spacing: 1px;
-            transition: all 0.2s;
-        }
-
-        .tag:active {
-            background: var(--accent);
-            color: var(--paper);
-            border-color: var(--accent);
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         /* 页脚 */
         .footer {
-            padding: 24px;
+            padding: 40px;
             text-align: center;
             background: var(--ink-brown);
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .footer-seal {
-            width: 36px;
-            height: 36px;
+            width: 50px;
+            height: 50px;
             background: var(--accent);
-            border-radius: 4px;
-            margin: 0 auto 12px;
+            border-radius: 6px;
+            margin: 0 auto 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: 'Noto Serif SC', serif;
-            font-size: 14px;
+            font-size: 20px;
             color: var(--paper);
         }
 
         .footer-text {
-            font-size: 11px;
-            color: rgba(237,230,216,0.6);
-            letter-spacing: 2px;
+            font-size: 14px;
+            color: rgba(237,230,216,0.7);
+            letter-spacing: 4px;
         }
 
         /* 滚动动画 */
         .fade-in {
             opacity: 0;
-            transform: translateY(15px);
-            transition: all 0.6s ease;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
         }
 
         .fade-in.visible {
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .banner-headline {
+                font-size: 32px;
+                letter-spacing: 2px;
+            }
+
+            .big-char {
+                font-size: 150px;
+                right: 20px;
+            }
+
+            .banner-sub {
+                font-size: 14px;
+            }
+
+            .core-grid {
+                grid-template-columns: 1fr;
+                padding: 0 20px;
+            }
+
+            .section-head,
+            .journey-list,
+            .tag-section {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .journey-item {
+                grid-template-columns: auto 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+
+            .journey-number {
+                font-size: 48px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .banner-content {
+                padding: 0 20px;
+            }
+
+            .quote-section {
+                padding: 40px 20px;
+                margin: 20px 0;
+            }
+
+            .quote-text {
+                font-size: 16px;
+                letter-spacing: 2px;
+            }
+        }
     </style>
 </head>
-<body class="paper-bg">
-    <div class="phone">
-        <div class="screen">
-            <!-- 状态栏 -->
-            <div class="status-bar">
-                <div class="status-bar-left">
-                    <span>9:41</span>
-                </div>
-                <div class="status-bar-right">
-                    <span>📶</span>
-                    <span>🔋</span>
-                </div>
+<body>
+    <!-- 导航栏 -->
+    <nav class="nav">
+        <div class="nav-content">
+            <div class="nav-logo">内观 · 自照</div>
+            <div class="nav-links">
+                <a href="#core">五心归一</a>
+                <a href="#journey">修行六途</a>
+                <a href="#quote">悟道</a>
             </div>
+        </div>
+    </nav>
 
-            <!-- Banner -->
-            <div class="home-banner">
-                <div class="banner-bg"></div>
-                <div class="big-char">观</div>
-                <div class="banner-content">
-                    <div class="banner-logo">内观 · 自照</div>
-                    <div class="banner-headline">主动认识自己</div>
-                    <div class="banner-sub">
-                        静心观照，方见本真。<br>
-                        每一个念头都是心迹，<br>
-                        每一次感受都是照见。
-                    </div>
-                </div>
-            </div>
-
-            <!-- 五心归一 -->
-            <div class="section-head">
-                <div class="section-ch">五心归一</div>
-                <div class="section-en">Five Hearts</div>
-            </div>
-            <div class="core-grid">
-                <div class="core-card fade-in">
-                    <div class="core-icon">感</div>
-                    <div class="core-title">真实感受</div>
-                    <div class="core-sub">心之所向，即是归处</div>
-                </div>
-                <div class="core-card fade-in">
-                    <div class="core-icon">见</div>
-                    <div class="core-title">看见自己</div>
-                    <div class="core-sub">照见本心，方得自在</div>
-                </div>
-                <div class="core-card fade-in">
-                    <div class="core-icon">力</div>
-                    <div class="core-title">找到力量</div>
-                    <div class="core-sub">道法自然，力量自生</div>
-                </div>
-                <div class="core-card fade-in">
-                    <div class="core-icon">化</div>
-                    <div class="core-title">转化情绪</div>
-                    <div class="core-sub">烦恼即菩提，转念即风景</div>
-                </div>
-                <div class="core-card fade-in">
-                    <div class="core-icon">行</div>
-                    <div class="core-title">专注行动</div>
-                    <div class="core-sub">知行合一，方见真章</div>
-                </div>
-                <div class="core-card fade-in">
-                    <div class="core-icon">全</div>
-                    <div class="core-title">完整</div>
-                    <div class="core-sub">完整胜过完美</div>
-                </div>
-            </div>
-
-            <!-- 标签 -->
-            <div class="section-head">
-                <div class="section-ch">修行标签</div>
-                <div class="section-en">Practice Tags</div>
-            </div>
-            <div class="tag-section">
-                <div class="tag-grid">
-                    <span class="tag">真实感受</span>
-                    <span class="tag">看见自己</span>
-                    <span class="tag">找到力量</span>
-                    <span class="tag">转化情绪</span>
-                    <span class="tag">专注行动</span>
-                    <span class="tag">完整胜过完美</span>
-                </div>
-            </div>
-
-            <!-- 修行六途 -->
-            <div class="section-head">
-                <div class="section-ch">修行六途</div>
-                <div class="section-en">Six Paths</div>
-            </div>
-            <div class="journey-list">
-                <div class="journey-item fade-in">
-                    <div class="journey-number">壹</div>
-                    <div class="journey-title">冲突</div>
-                    <div class="journey-desc">冲突非敌，乃成长之机。如镜照心，破我执，见新机。心若宽广，冲突即慈悲。</div>
-                </div>
-                <div class="journey-item fade-in">
-                    <div class="journey-number">贰</div>
-                    <div class="journey-title">迷茫</div>
-                    <div class="journey-desc">迷雾之中，步步是禅。莫问前程，只顾脚下。初心不忘，终见光明。</div>
-                </div>
-                <div class="journey-item fade-in">
-                    <div class="journey-number">叁</div>
-                    <div class="journey-title">转念</div>
-                    <div class="journey-desc">一念转，天地宽。心随境转是凡夫，境随心转是修行。换个角度，便是春天。</div>
-                </div>
-                <div class="journey-item fade-in">
-                    <div class="journey-number">肆</div>
-                    <div class="journey-title">坚持行动</div>
-                    <div class="journey-desc">知而不行，只是未知。破无明，唯行动。日拱一卒，功不唐捐。</div>
-                </div>
-                <div class="journey-item fade-in">
-                    <div class="journey-number">伍</div>
-                    <div class="journey-title">正确行动</div>
-                    <div class="journey-desc">方向不对，努力白费。做正确之事，胜过正确做事。心之所向，道之所往。</div>
-                </div>
-                <div class="journey-item fade-in">
-                    <div class="journey-number">陆</div>
-                    <div class="journey-title">完整胜过完美</div>
-                    <div class="journey-desc">求全则毁，缺即圆满。接纳不完美，才是真完整。人生如月，盈亏皆美。</div>
-                </div>
-            </div>
-
-            <!-- 悟道引用 -->
-            <div class="quote-section fade-in">
-                <div class="quote-deco">"</div>
-                <div class="quote-text">
-                    万法皆空，因果不空<br>
-                    心无所住，而生其心<br>
-                    见山是山，见水是水
-                </div>
-            </div>
-
-            <!-- 页脚 -->
-            <div class="footer">
-                <div class="footer-seal">心</div>
-                <div class="footer-text">内观自照 · 王华洁 · 丙申年</div>
+    <!-- Banner -->
+    <div class="home-banner">
+        <div class="banner-bg"></div>
+        <div class="big-char">观</div>
+        <div class="banner-content">
+            <div class="banner-logo">内观 · 自照</div>
+            <div class="banner-headline">主动认识自己</div>
+            <div class="banner-sub">
+                静心观照，方见本真。<br>
+                每一个念头都是心迹，<br>
+                每一次感受都是照见。
             </div>
         </div>
     </div>
+
+    <!-- 五心归一 -->
+    <div class="section-head" id="core">
+        <div class="section-ch">五心归一</div>
+        <div class="section-en">Five Hearts</div>
+    </div>
+    <div class="core-grid">
+        <div class="core-card fade-in">
+            <div class="core-icon">感</div>
+            <div class="core-title">真实感受</div>
+            <div class="core-sub">心之所向，即是归处</div>
+        </div>
+        <div class="core-card fade-in">
+            <div class="core-icon">见</div>
+            <div class="core-title">看见自己</div>
+            <div class="core-sub">照见本心，方得自在</div>
+        </div>
+        <div class="core-card fade-in">
+            <div class="core-icon">力</div>
+            <div class="core-title">找到力量</div>
+            <div class="core-sub">道法自然，力量自生</div>
+        </div>
+        <div class="core-card fade-in">
+            <div class="core-icon">化</div>
+            <div class="core-title">转化情绪</div>
+            <div class="core-sub">烦恼即菩提，转念即风景</div>
+        </div>
+        <div class="core-card fade-in">
+            <div class="core-icon">行</div>
+            <div class="core-title">专注行动</div>
+            <div class="core-sub">知行合一，方见真章</div>
+        </div>
+        <div class="core-card fade-in">
+            <div class="core-icon">全</div>
+            <div class="core-title">完整</div>
+            <div class="core-sub">完整胜过完美</div>
+        </div>
+    </div>
+
+    <!-- 标签 -->
+    <div class="section-head">
+        <div class="section-ch">修行标签</div>
+        <div class="section-en">Practice Tags</div>
+    </div>
+    <div class="tag-section">
+        <div class="tag-grid">
+            <span class="tag">真实感受</span>
+            <span class="tag">看见自己</span>
+            <span class="tag">找到力量</span>
+            <span class="tag">转化情绪</span>
+            <span class="tag">专注行动</span>
+            <span class="tag">完整胜过完美</span>
+        </div>
+    </div>
+
+    <!-- 修行六途 -->
+    <div class="section-head" id="journey">
+        <div class="section-ch">修行六途</div>
+        <div class="section-en">Six Paths</div>
+    </div>
+    <div class="journey-list">
+        <div class="journey-item fade-in">
+            <div class="journey-number">壹</div>
+            <div class="journey-content">
+                <div class="journey-title">冲突</div>
+                <div class="journey-desc">冲突非敌，乃成长之机。如镜照心，破我执，见新机。心若宽广，冲突即慈悲。</div>
+            </div>
+        </div>
+        <div class="journey-item fade-in">
+            <div class="journey-number">贰</div>
+            <div class="journey-content">
+                <div class="journey-title">迷茫</div>
+                <div class="journey-desc">迷雾之中，步步是禅。莫问前程，只顾脚下。初心不忘，终见光明。</div>
+            </div>
+        </div>
+        <div class="journey-item fade-in">
+            <div class="journey-number">叁</div>
+            <div class="journey-content">
+                <div class="journey-title">转念</div>
+                <div class="journey-desc">一念转，天地宽。心随境转是凡夫，境随心转是修行。换个角度，便是春天。</div>
+            </div>
+        </div>
+        <div class="journey-item fade-in">
+            <div class="journey-number">肆</div>
+            <div class="journey-content">
+                <div class="journey-title">坚持行动</div>
+                <div class="journey-desc">知而不行，只是未知。破无明，唯行动。日拱一卒，功不唐捐。</div>
+            </div>
+        </div>
+        <div class="journey-item fade-in">
+            <div class="journey-number">伍</div>
+            <div class="journey-content">
+                <div class="journey-title">正确行动</div>
+                <div class="journey-desc">方向不对，努力白费。做正确之事，胜过正确做事。心之所向，道之所往。</div>
+            </div>
+        </div>
+        <div class="journey-item fade-in">
+            <div class="journey-number">陆</div>
+            <div class="journey-content">
+                <div class="journey-title">完整胜过完美</div>
+                <div class="journey-desc">求全则毁，缺即圆满。接纳不完美，才是真完整。人生如月，盈亏皆美。</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 悟道引用 -->
+    <div class="quote-section fade-in" id="quote">
+        <div class="quote-deco">"</div>
+        <div class="quote-text">
+            万法皆空，因果不空<br>
+            心无所住，而生其心<br>
+            见山是山，见水是水
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-seal">心</div>
+            <div class="footer-text">内观自照 · 王华洁 · 丙申年</div>
+        </div>
+    </footer>
 
     <script>
         // 滚动动画
         const observerOptions = {
             threshold: 0.1,
-            rootMargin: '0px 0px -30px 0px'
+            rootMargin: '0px 0px -50px 0px'
         };
 
         const observer = new IntersectionObserver((entries) => {
@@ -581,6 +671,20 @@
 
         document.querySelectorAll('.fade-in').forEach(el => {
             observer.observe(el);
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
         });
     </script>
 </body>
