@@ -3,573 +3,502 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>王华杰 | 立体主义肖像</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>王华洁 | 内观</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600;700;900&family=Noto+Sans+SC:wght@300;400;500&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
     <style>
+        :root {
+            /* 佗寂风色盘 */
+            --paper:        #ede6d8;
+            --paper-dark:   #e0d5c0;
+            --paper-darker: #d0c4aa;
+            --ink-brown:    #3d2e1e;
+            --ink-mid:      #7c6150;
+            --accent:       #968359;
+            --accent-soft:  #c3ae7c;
+            --gold:         #c3ae7c;
+            --sage:         #8a9070;
+            --line:         rgba(124,97,80,0.18);
+            --line-soft:    rgba(124,97,80,0.09);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
-
-        :root {
-            --picasso-blue: #0066A4;
-            --picasso-red: #D62828;
-            --picasso-yellow: #F4A261;
-            --picasso-cream: #F5E6CC;
-            --picasso-black: #1A1A1A;
-            --picasso-green: #2D6A4F;
-            --picasso-purple: #7B2CBF;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
             font-family: 'Noto Sans SC', sans-serif;
-            background: var(--picasso-cream);
-            color: var(--picasso-black);
-            overflow-x: hidden;
+            background: #2a2420;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
         }
 
-        /* 毕加索风格导航 */
-        nav {
-            position: fixed;
-            top: 0;
+        /* 纸张肌理背景 */
+        .paper-bg {
+            background-color: var(--paper);
+            background-image:
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+        }
+
+        /* 手机上移除模拟外壳 */
+        @media screen and (max-width: 500px) {
+            body {
+                padding: 0;
+                background: var(--paper);
+            }
+        }
+
+        .phone {
+            width: 390px;
+            height: 844px;
+            border-radius: 44px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 0 12px #1a1510, 0 0 0 13px #2a2218;
+        }
+
+        @media screen and (max-width: 500px) {
+            .phone {
+                width: 100%;
+                height: auto;
+                border-radius: 0;
+                box-shadow: none;
+                min-height: 100vh;
+            }
+        }
+
+        @media screen and (min-width: 501px) {
+            body {
+                padding: 20px;
+            }
+        }
+
+        .screen {
             width: 100%;
-            padding: 1.5rem 3rem;
-            background: linear-gradient(90deg,
-                var(--picasso-blue) 0%,
-                var(--picasso-yellow) 50%,
-                var(--picasso-red) 100%);
-            z-index: 1000;
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+            position: relative;
+            scroll-behavior: smooth;
+            background: var(--paper);
+        }
+
+        .screen::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* 状态栏 */
+        .status-bar {
+            height: 44px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%);
+            padding: 0 28px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--ink-brown);
+            position: sticky;
+            top: 0;
+            background: var(--paper);
+            z-index: 100;
         }
 
-        .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            font-weight: 700;
-            color: white;
-            text-shadow: 3px 3px 0 var(--picasso-black);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            padding: 0.5rem 1rem;
-            background: rgba(0,0,0,0.2);
-            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
-            transition: transform 0.3s;
-        }
-
-        .nav-links a:hover {
-            transform: scale(1.1) rotate(-2deg);
-            background: var(--picasso-black);
-        }
-
-        /* 英雄区域 - 立体主义肖像 */
-        .hero {
-            min-height: 100vh;
+        .status-bar-left, .status-bar-right {
             display: flex;
             align-items: center;
-            justify-content: center;
-            padding: 6rem 3rem 3rem;
-            background: var(--picasso-cream);
+            gap: 4px;
+        }
+
+        /* 首页Banner */
+        .home-banner {
             position: relative;
+            height: 280px;
             overflow: hidden;
         }
 
-        .hero::before {
-            content: '';
+        .banner-bg {
             position: absolute;
-            width: 600px;
-            height: 600px;
-            background: var(--picasso-blue);
-            border-radius: 50%;
-            top: -200px;
-            right: -200px;
-            opacity: 0.3;
+            inset: 0;
+            background: linear-gradient(160deg, #cdba9c 0%, #968359 40%, #7c6150 100%);
         }
 
-        .hero::after {
+        .banner-bg::after {
             content: '';
             position: absolute;
-            width: 400px;
-            height: 400px;
-            background: var(--picasso-red);
-            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-            bottom: -100px;
-            left: -100px;
-            opacity: 0.2;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+            opacity: 0.5;
         }
 
-        .hero-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            max-width: 1400px;
+        .banner-content {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 32px;
+            z-index: 2;
+        }
+
+        .banner-logo {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 13px;
+            font-weight: 300;
+            color: rgba(61,46,30,0.55);
+            letter-spacing: 6px;
+            margin-bottom: 14px;
+        }
+
+        .banner-headline {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #3d2e1e;
+            line-height: 1.4;
+            margin-bottom: 12px;
+        }
+
+        .banner-sub {
+            font-size: 12px;
+            font-weight: 300;
+            color: rgba(61,46,30,0.55);
+            line-height: 1.8;
+            letter-spacing: 1px;
+        }
+
+        /* 大字装饰 */
+        .big-char {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-family: 'Noto Serif SC', serif;
+            font-size: 120px;
+            font-weight: 900;
+            color: rgba(242,235,224,0.08);
+            line-height: 1;
             z-index: 1;
         }
 
-        /* 毕加索风格肖像 */
-        .picasso-portrait {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 1;
-        }
-
-        .face-base {
-            position: absolute;
-            width: 70%;
-            height: 70%;
-            top: 15%;
-            left: 15%;
-            background: var(--picasso-cream);
-            border: 4px solid var(--picasso-black);
-            clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%);
-        }
-
-        .left-eye {
-            position: absolute;
-            width: 60px;
-            height: 40px;
-            top: 35%;
-            left: 30%;
-            background: white;
-            border: 3px solid var(--picasso-black);
-            clip-path: circle(50%);
-        }
-
-        .left-iris {
-            position: absolute;
-            width: 25px;
-            height: 25px;
-            top: 35%;
-            left: 35%;
-            background: var(--picasco-black);
-            clip-path: circle(50%);
-        }
-
-        .right-eye {
-            position: absolute;
-            width: 70px;
-            height: 50px;
-            top: 38%;
-            right: 25%;
-            background: white;
-            border: 3px solid var(--picasso-black);
-            clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-        }
-
-        .right-iris {
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            top: 38%;
-            right: 30%;
-            background: var(--picasso-black);
-            clip-path: circle(50%);
-        }
-
-        .nose {
-            position: absolute;
-            width: 0;
-            height: 0;
-            border-left: 40px solid transparent;
-            border-right: 40px solid transparent;
-            border-top: 80px solid var(--picasso-yellow);
-            top: 45%;
-            left: 50%;
-            transform: translateX(-50%) rotate(15deg);
-        }
-
-        .mouth {
-            position: absolute;
-            width: 100px;
-            height: 40px;
-            bottom: 25%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--picasso-red);
-            border: 3px solid var(--picasso-black);
-            clip-path: polygon(0% 100%, 50% 0%, 100% 100%);
-        }
-
-        .hair-1 {
-            position: absolute;
-            width: 150px;
-            height: 100px;
-            top: 5%;
-            left: 20%;
-            background: var(--picasso-black);
-            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-        }
-
-        .hair-2 {
-            position: absolute;
-            width: 120px;
-            height: 80px;
-            top: 0%;
-            right: 25%;
-            background: var(--picasso-black);
-            clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-        }
-
-        .eyebrow-left {
-            position: absolute;
-            width: 80px;
-            height: 15px;
-            top: 28%;
-            left: 25%;
-            background: var(--picasso-black);
-            clip-path: polygon(0% 100%, 100% 0%, 100% 100%);
-        }
-
-        .eyebrow-right {
-            position: absolute;
-            width: 90px;
-            height: 15px;
-            top: 30%;
-            right: 20%;
-            background: var(--picasso-black);
-            clip-path: polygon(0% 0%, 100% 100%, 0% 100%);
-        }
-
-        /* 英雄文字 */
-        .hero-text {
+        /* 板块标题 */
+        .section-head {
+            padding: 28px 24px 14px;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .hero-text h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 5rem;
-            line-height: 1.1;
-            margin-bottom: 2rem;
-            color: var(--picasso-black);
-        }
-
-        .hero-text h1 span {
-            display: inline-block;
-            transform: rotate(-3deg);
-        }
-
-        .hero-text h1 span:nth-child(2) {
-            transform: rotate(2deg);
-            color: var(--picasso-blue);
-        }
-
-        .hero-text h1 span:nth-child(3) {
-            transform: rotate(-1deg);
-            color: var(--picasso-red);
-        }
-
-        .hero-text p {
-            font-size: 1.5rem;
-            line-height: 2;
-            margin-bottom: 2rem;
-            font-weight: 300;
-        }
-
-        .tag-cloud {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .tag {
-            padding: 0.75rem 1.5rem;
-            font-size: 1rem;
-            font-weight: 700;
-            border: 3px solid var(--picasso-black);
-            transition: all 0.3s;
-        }
-
-        .tag:nth-child(odd) {
-            background: var(--picasso-blue);
-            color: white;
-            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
-        }
-
-        .tag:nth-child(even) {
-            background: var(--picasso-yellow);
-            clip-path: polygon(0 0, 90% 0, 100% 100%, 10% 100%);
-        }
-
-        .tag:hover {
-            transform: scale(1.2) rotate(5deg);
-            box-shadow: 5px 5px 0 var(--picasso-black);
-        }
-
-        /* 立体主义章节 */
-        .cubism-section {
-            padding: 8rem 3rem;
-            background: var(--picasso-black);
-            color: white;
-        }
-
-        .section-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 3.5rem;
-            text-align: center;
-            margin-bottom: 4rem;
+            align-items: flex-end;
+            justify-content: space-between;
             position: relative;
         }
 
-        .section-title::after {
+        .section-head::after {
             content: '';
-            display: block;
-            width: 200px;
-            height: 5px;
-            background: linear-gradient(90deg, var(--picasso-blue), var(--picasso-yellow), var(--picasso-red));
-            margin: 2rem auto;
+            position: absolute;
+            bottom: 0;
+            left: 24px;
+            right: 24px;
+            height: 1px;
+            background: var(--line);
         }
 
-        .cubism-grid {
+        .section-ch {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--ink-brown);
+            letter-spacing: 2px;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .section-en {
+            font-family: 'IM Fell English', serif;
+            font-style: italic;
+            font-size: 11px;
+            color: rgba(90,66,50,0.45);
+            letter-spacing: 2px;
+        }
+
+        /* 五心归一 */
+        .core-grid {
+            padding: 0 20px;
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
         }
 
-        .cubism-card {
-            padding: 3rem;
-            border: 4px solid var(--picasso-black);
-            position: relative;
-            overflow: hidden;
-            min-height: 350px;
+        .core-card {
+            background: var(--paper-dark);
+            border: 1px solid var(--line);
+            border-radius: 4px;
+            padding: 18px 16px;
             display: flex;
             flex-direction: column;
-            justify-content: flex-end;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
         }
 
-        .cubism-card:nth-child(1) {
-            background: var(--picasso-blue);
-            clip-path: polygon(0 10%, 100% 0, 100% 90%, 0% 100%);
+        .core-card:active {
+            background: var(--paper-darker);
         }
 
-        .cubism-card:nth-child(2) {
-            background: var(--picasso-red);
-            clip-path: polygon(5% 0, 95% 0, 100% 100%, 0% 100%);
-        }
-
-        .cubism-card:nth-child(3) {
-            background: var(--picasso-yellow);
-            clip-path: polygon(0 0, 100% 5%, 100% 100%, 0% 95%);
-        }
-
-        .cubism-card:nth-child(4) {
-            background: var(--picasso-green);
-            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 90%);
-        }
-
-        .cubism-card:nth-child(5) {
-            background: var(--picasso-purple);
-            clip-path: polygon(0 5%, 95% 0, 100% 95%, 5% 100%);
-        }
-
-        .cubism-card:nth-child(6) {
-            background: var(--picasso-cream);
-            color: var(--picasso-black);
-            clip-path: polygon(5% 0, 100% 10%, 95% 100%, 0% 90%);
-        }
-
-        .cubism-card h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        .cubism-card p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            opacity: 0.9;
-        }
-
-        .card-number {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            font-family: 'Playfair Display', serif;
-            font-size: 4rem;
+        .core-icon {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 32px;
             font-weight: 700;
-            opacity: 0.2;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 8px;
         }
 
-        /* 几何装饰 */
-        .geometric-decoration {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 1rem;
-            padding: 4rem 3rem;
-            background: var(--picasso-cream);
+        .core-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--ink-brown);
+            margin-bottom: 4px;
+            letter-spacing: 1px;
         }
 
-        .geo-shape {
-            aspect-ratio: 1;
-            border: 3px solid var(--picasso-black);
-            animation: float 6s ease-in-out infinite;
+        .core-sub {
+            font-size: 10px;
+            color: rgba(90,66,50,0.5);
+            text-align: center;
+            letter-spacing: 0.5px;
+            line-height: 1.5;
         }
 
-        .geo-shape:nth-child(1) {
-            background: var(--picasso-blue);
-            clip-path: circle(50%);
-            animation-delay: 0s;
+        /* 修行六途 */
+        .journey-list {
+            padding: 0 20px;
         }
 
-        .geo-shape:nth-child(2) {
-            background: var(--picasso-red);
-            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-            animation-delay: 1s;
+        .journey-item {
+            border-bottom: 1px solid var(--line);
+            padding: 20px 0;
+            position: relative;
         }
 
-        .geo-shape:nth-child(3) {
-            background: var(--picasso-yellow);
-            clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-            animation-delay: 2s;
+        .journey-item:last-child {
+            border-bottom: none;
         }
 
-        .geo-shape:nth-child(4) {
-            background: var(--picasso-green);
-            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 50% 75%, 0% 100%);
-            animation-delay: 3s;
+        .journey-number {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 48px;
+            font-weight: 900;
+            color: var(--accent);
+            opacity: 0.15;
+            position: absolute;
+            right: 0;
+            top: 8px;
+            line-height: 1;
         }
 
-        .geo-shape:nth-child(5) {
-            background: var(--picasso-purple);
-            clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%);
-            animation-delay: 4s;
+        .journey-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--ink-brown);
+            letter-spacing: 2px;
+            margin-bottom: 6px;
+            position: relative;
         }
 
-        .geo-shape:nth-child(6) {
-            background: var(--picasso-black);
-            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-            animation-delay: 5s;
+        .journey-title::before {
+            content: '「';
+            font-size: 16px;
+            color: var(--accent);
         }
 
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0) rotate(0deg);
-            }
-            50% {
-                transform: translateY(-20px) rotate(180deg);
-            }
+        .journey-title::after {
+            content: '」';
+            font-size: 16px;
+            color: var(--accent);
+        }
+
+        .journey-desc {
+            font-size: 13px;
+            color: rgba(90,66,50,0.65);
+            line-height: 1.8;
+            letter-spacing: 0.5px;
         }
 
         /* 引用区域 */
         .quote-section {
-            padding: 6rem 3rem;
-            background: linear-gradient(135deg,
-                var(--picasso-blue) 0%,
-                var(--picasso-purple) 50%,
-                var(--picasso-red) 100%);
+            padding: 32px 24px;
+            background: var(--paper-dark);
+            position: relative;
+            margin: 20px 0;
+        }
+
+        .quote-deco {
+            position: absolute;
+            top: 16px;
+            left: 20px;
+            font-family: 'Noto Serif SC', serif;
+            font-size: 40px;
+            color: var(--accent);
+            opacity: 0.2;
+        }
+
+        .quote-text {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--ink-brown);
+            line-height: 2;
+            letter-spacing: 2px;
             text-align: center;
-            color: white;
         }
 
-        .quote {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            max-width: 900px;
-            margin: 0 auto;
-            line-height: 1.6;
+        /* 标签云 */
+        .tag-section {
+            padding: 0 20px 24px;
         }
 
-        .quote::before, .quote::after {
-            content: '"';
-            font-size: 6rem;
-            display: block;
-            line-height: 0.5;
-            opacity: 0.5;
+        .tag-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            padding: 8px 16px;
+            font-size: 12px;
+            color: var(--ink-mid);
+            background: var(--paper-dark);
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+        }
+
+        .tag:active {
+            background: var(--accent);
+            color: var(--paper);
+            border-color: var(--accent);
         }
 
         /* 页脚 */
-        footer {
-            padding: 3rem;
-            background: var(--picasso-black);
-            color: white;
+        .footer {
+            padding: 24px;
             text-align: center;
+            background: var(--ink-brown);
         }
 
-        footer p {
-            opacity: 0.7;
+        .footer-seal {
+            width: 36px;
+            height: 36px;
+            background: var(--accent);
+            border-radius: 4px;
+            margin: 0 auto 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Noto Serif SC', serif;
+            font-size: 14px;
+            color: var(--paper);
         }
 
-        /* 响应式设计 */
-        @media (max-width: 768px) {
-            .hero-content {
-                grid-template-columns: 1fr;
-            }
+        .footer-text {
+            font-size: 11px;
+            color: rgba(237,230,216,0.6);
+            letter-spacing: 2px;
+        }
 
-            .hero-text h1 {
-                font-size: 3rem;
-            }
+        /* 滚动动画 */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(15px);
+            transition: all 0.6s ease;
+        }
 
-            .cubism-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .geometric-decoration {
-                grid-template-columns: repeat(3, 1fr);
-            }
-
-            nav {
-                padding: 1rem;
-            }
-
-            .nav-links {
-                display: none;
-            }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
-<body>
-    <nav>
-        <div class="logo">PICASSO.STYLE</div>
-        <div class="nav-links">
-            <a href="#portrait">肖像</a>
-            <a href="#journey">旅程</a>
-            <a href="#philosophy">哲学</a>
-        </div>
-    </nav>
-
-    <section class="hero" id="portrait">
-        <div class="hero-content">
-            <div class="picasso-portrait">
-                <div class="hair-1"></div>
-                <div class="hair-2"></div>
-                <div class="face-base"></div>
-                <div class="eyebrow-left"></div>
-                <div class="eyebrow-right"></div>
-                <div class="left-eye">
-                    <div class="left-iris"></div>
+<body class="paper-bg">
+    <div class="phone">
+        <div class="screen">
+            <!-- 状态栏 -->
+            <div class="status-bar">
+                <div class="status-bar-left">
+                    <span>9:41</span>
                 </div>
-                <div class="right-eye">
-                    <div class="right-iris"></div>
+                <div class="status-bar-right">
+                    <span>📶</span>
+                    <span>🔋</span>
                 </div>
-                <div class="nose"></div>
-                <div class="mouth"></div>
             </div>
 
-            <div class="hero-text">
-                <h1>
-                    <span>主动</span>
-                    <span>认识</span>
-                    <span>自己</span>
-                </h1>
-                <p>在立体的世界里，看见每一个侧面。<br>每一个角度都是真实的，每一片碎片都是完整的。</p>
-                <div class="tag-cloud">
+            <!-- Banner -->
+            <div class="home-banner">
+                <div class="banner-bg"></div>
+                <div class="big-char">观</div>
+                <div class="banner-content">
+                    <div class="banner-logo">内观 · 自照</div>
+                    <div class="banner-headline">主动认识自己</div>
+                    <div class="banner-sub">
+                        静心观照，方见本真。<br>
+                        每一个念头都是心迹，<br>
+                        每一次感受都是照见。
+                    </div>
+                </div>
+            </div>
+
+            <!-- 五心归一 -->
+            <div class="section-head">
+                <div class="section-ch">五心归一</div>
+                <div class="section-en">Five Hearts</div>
+            </div>
+            <div class="core-grid">
+                <div class="core-card fade-in">
+                    <div class="core-icon">感</div>
+                    <div class="core-title">真实感受</div>
+                    <div class="core-sub">心之所向，即是归处</div>
+                </div>
+                <div class="core-card fade-in">
+                    <div class="core-icon">见</div>
+                    <div class="core-title">看见自己</div>
+                    <div class="core-sub">照见本心，方得自在</div>
+                </div>
+                <div class="core-card fade-in">
+                    <div class="core-icon">力</div>
+                    <div class="core-title">找到力量</div>
+                    <div class="core-sub">道法自然，力量自生</div>
+                </div>
+                <div class="core-card fade-in">
+                    <div class="core-icon">化</div>
+                    <div class="core-title">转化情绪</div>
+                    <div class="core-sub">烦恼即菩提，转念即风景</div>
+                </div>
+                <div class="core-card fade-in">
+                    <div class="core-icon">行</div>
+                    <div class="core-title">专注行动</div>
+                    <div class="core-sub">知行合一，方见真章</div>
+                </div>
+                <div class="core-card fade-in">
+                    <div class="core-icon">全</div>
+                    <div class="core-title">完整</div>
+                    <div class="core-sub">完整胜过完美</div>
+                </div>
+            </div>
+
+            <!-- 标签 -->
+            <div class="section-head">
+                <div class="section-ch">修行标签</div>
+                <div class="section-en">Practice Tags</div>
+            </div>
+            <div class="tag-section">
+                <div class="tag-grid">
                     <span class="tag">真实感受</span>
                     <span class="tag">看见自己</span>
                     <span class="tag">找到力量</span>
@@ -578,71 +507,81 @@
                     <span class="tag">完整胜过完美</span>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <div class="geometric-decoration">
-        <div class="geo-shape"></div>
-        <div class="geo-shape"></div>
-        <div class="geo-shape"></div>
-        <div class="geo-shape"></div>
-        <div class="geo-shape"></div>
-        <div class="geo-shape"></div>
+            <!-- 修行六途 -->
+            <div class="section-head">
+                <div class="section-ch">修行六途</div>
+                <div class="section-en">Six Paths</div>
+            </div>
+            <div class="journey-list">
+                <div class="journey-item fade-in">
+                    <div class="journey-number">壹</div>
+                    <div class="journey-title">冲突</div>
+                    <div class="journey-desc">冲突非敌，乃成长之机。如镜照心，破我执，见新机。心若宽广，冲突即慈悲。</div>
+                </div>
+                <div class="journey-item fade-in">
+                    <div class="journey-number">贰</div>
+                    <div class="journey-title">迷茫</div>
+                    <div class="journey-desc">迷雾之中，步步是禅。莫问前程，只顾脚下。初心不忘，终见光明。</div>
+                </div>
+                <div class="journey-item fade-in">
+                    <div class="journey-number">叁</div>
+                    <div class="journey-title">转念</div>
+                    <div class="journey-desc">一念转，天地宽。心随境转是凡夫，境随心转是修行。换个角度，便是春天。</div>
+                </div>
+                <div class="journey-item fade-in">
+                    <div class="journey-number">肆</div>
+                    <div class="journey-title">坚持行动</div>
+                    <div class="journey-desc">知而不行，只是未知。破无明，唯行动。日拱一卒，功不唐捐。</div>
+                </div>
+                <div class="journey-item fade-in">
+                    <div class="journey-number">伍</div>
+                    <div class="journey-title">正确行动</div>
+                    <div class="journey-desc">方向不对，努力白费。做正确之事，胜过正确做事。心之所向，道之所往。</div>
+                </div>
+                <div class="journey-item fade-in">
+                    <div class="journey-number">陆</div>
+                    <div class="journey-title">完整胜过完美</div>
+                    <div class="journey-desc">求全则毁，缺即圆满。接纳不完美，才是真完整。人生如月，盈亏皆美。</div>
+                </div>
+            </div>
+
+            <!-- 悟道引用 -->
+            <div class="quote-section fade-in">
+                <div class="quote-deco">"</div>
+                <div class="quote-text">
+                    万法皆空，因果不空<br>
+                    心无所住，而生其心<br>
+                    见山是山，见水是水
+                </div>
+            </div>
+
+            <!-- 页脚 -->
+            <div class="footer">
+                <div class="footer-seal">心</div>
+                <div class="footer-text">内观自照 · 王华洁 · 丙申年</div>
+            </div>
+        </div>
     </div>
 
-    <section class="cubism-section" id="journey">
-        <h2 class="section-title">内在旅程的六个面向</h2>
-        <div class="cubism-grid">
-            <div class="cubism-card">
-                <span class="card-number">01</span>
-                <h3>冲突</h3>
-                <p>冲突不是敌人，是成长的契机。就像立体主义打破单一视角，冲突打破单一认知，让新的可能性浮现。</p>
-            </div>
-            <div class="cubism-card">
-                <span class="card-number">02</span>
-                <h3>迷茫</h3>
-                <p>在迷雾中行走，每一步都是探索。迷茫时不必急着看清远方，专注脚下的一步就够了。</p>
-            </div>
-            <div class="cubism-card">
-                <span class="card-number">03</span>
-                <h3>转念</h3>
-                <p>换个角度，世界焕然一新。就像毕加索的肖像，正面与侧面同时存在，真实是多维的。</p>
-            </div>
-            <div class="cubism-card">
-                <span class="card-number">04</span>
-                <h3>坚持行动</h3>
-                <p>行动是破解无明最好的方式。不需要完美的计划，只需要持续地做，让行动带来答案。</p>
-            </div>
-            <div class="cubism-card">
-                <span class="card-number">05</span>
-                <h3>正确行动</h3>
-                <p>做正确的事，比把事情做对更重要。方向对了，每一步都在靠近心中的完整。</p>
-            </div>
-            <div class="cubism-card">
-                <span class="card-number">06</span>
-                <h3>完整胜过完美</h3>
-                <p>不要做完美的自己，要做完整的自己。碎片终会拼成画面，不完美才是最真实的艺术。</p>
-            </div>
-        </div>
-    </section>
+    <script>
+        // 滚动动画
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -30px 0px'
+        };
 
-    <section class="quote-section" id="philosophy">
-        <div class="quote">
-            <p>每一个艺术家起初都在模仿，<br>真正的创造来自于打破常规，<br>用新的眼光看待熟悉的事物。</p>
-        </div>
-    </section>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
 
-    <div class="geometric-decoration">
-        <div class="geo-shape"></div>
-        <div class="geo-shape"></div>
-        <div class="geo-shape"></div>
-        <div class="geo-shape"></div>
-        <div class="geo-shape"></div>
-        <div class="geo-shape"></div>
-    </div>
-
-    <footer>
-        <p>以立体主义的视角，看见完整的自己 | 2026</p>
-    </footer>
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
 </body>
 </html>
